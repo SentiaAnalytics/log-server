@@ -1,8 +1,11 @@
 PORT = 33333
-HOST = '127.0.0.1'
+HOST = process.env.LOG_SERVER_HOST
+
 
 dgram = require 'dgram'
-message = new Buffer JSON.stringify tags: 'info:test', message: 'hello world'
+message = new Buffer JSON.stringify
+  tags: 'info:test',
+  payload: 'hello world'
 
 client = dgram.createSocket 'udp4'
 client.send message, 0, message.length, PORT, HOST, (err, bytes) =>

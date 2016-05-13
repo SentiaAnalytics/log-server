@@ -1,0 +1,8 @@
+.space-between {
+  display:flex;
+  justify-content: space-between;
+}
+
+blockquote {
+  white-space: pre;
+}

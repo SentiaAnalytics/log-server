@@ -1,27 +1,25 @@
+rethink = require './rethink'
 express = require 'express'
+socketIO = require 'socket.io'
+http = require 'http'
 
-module.exports = app = express()
+app = express()
+server = http.Server app
+io = socketIO server
 
-app.use (req, res, next) =>
-  console.log "#{req.method} #{req.hostname}"
-  console.log 'HEADERS', req.headers
-  next()
+rethink.changes 'logs'
+  .then (changes) => changes.each (err, change) =>
+    console.log 'CHANGE', change
+    if change.old_val == null
+      io.emit 'NEW_LOG', change.new_val
 
 app.use express.static 'public'
 
 app.get '/logs', (req, res) =>
-  res.send [
-      tags: 'info:test'
-      type: 'json'
-      message:
-        msg: 'im some data'
-    ,
-      tags: 'info:stuff'
-      type: 'json'
-      message:
-        msg: 'im am some stuff'
-    ,
-      tags: 'info:stuff'
-      type: 'text'
-      message: 'I am text'
-  ]
+  rethink.all 'logs'
+    .then (logs) =>
+      res.send logs
+    .catch (err) =>
+      res.status(500).send(err)
+
+module.exports = server
