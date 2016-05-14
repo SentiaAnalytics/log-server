@@ -1,12 +1,13 @@
 without = require 'ramda/src/without'
 forEach = require 'ramda/src/forEach'
+clone = require 'ramda/src/clone'
 
 module.exports = (reducer) =>
   observers = []
-  model = {}
+  state = reducer(undefined, type: 'NO_OP')
   dispatch = (action) =>
-    model = reducer model, action
-    forEach ((o) => o(model)), observers
+    state = reducer state, action
+    forEach ((o) => o(state)), observers
 
   observe = (observer) =>
     observers = [observers..., observer]
@@ -14,4 +15,7 @@ module.exports = (reducer) =>
       observers = without [observer], observers
       null
 
-  {dispatch, observe}
+  getState = () =>
+    clone state
+
+  {dispatch, observe, getState}

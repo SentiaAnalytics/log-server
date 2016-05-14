@@ -1,5 +1,5 @@
 PORT = 33333
-HOST = process.env.LOG_SERVER_HOST
+HOST = '127.0.0.1'
 
 
 dgram = require 'dgram'
@@ -10,5 +10,5 @@ message = new Buffer JSON.stringify
 client = dgram.createSocket 'udp4'
 client.send message, 0, message.length, PORT, HOST, (err, bytes) =>
   if err then throw err
-  console.log 'UDP message sent to ' + HOST,':', PORT
+  console.log "UDP message sent to #{HOST}:#{PORT}"
   client.close()
