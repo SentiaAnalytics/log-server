@@ -2,7 +2,6 @@ React = require 'react'
 map = require 'ramda/src/map'
 sort = require 'ramda/src/sort'
 curry = require 'ramda/src/curry'
-split = require 'ramda/src/split'
 contains = require 'ramda/src/contains'
 renderLog = require './log'
 

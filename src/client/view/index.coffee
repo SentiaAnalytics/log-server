@@ -4,7 +4,6 @@ Filters = require './filters'
 map = require 'ramda/src/map'
 flatten = require 'ramda/src/flatten'
 uniq = require 'ramda/src/uniq'
-split = require 'ramda/src/split'
 filter = require 'ramda/src/filter'
 
 module.exports = (state) => React.createElement React.createClass

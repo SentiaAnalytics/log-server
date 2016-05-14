@@ -1,6 +1,5 @@
 React = require 'react'
 map = require 'ramda/src/map'
-split = require 'ramda/src/split'
 D = require 'date-fp'
 renderTag = (tag) =>
   console.log 'TAG', tag
