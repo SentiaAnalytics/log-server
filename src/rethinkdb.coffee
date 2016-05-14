@@ -21,6 +21,10 @@ filter = curry (table, filter, conn) =>
 
 module.exports = (options) =>
   connection = rethink.connect options
+    .catch (err) =>
+      console.error 'CONNECTION ERROR', err
+      process.exit 1
+
   all: (table) => connection.then (all table)
   changes: (table) => connection.then (changes table)
   insert: curry (table, doc) => connection.then (insert table, doc)

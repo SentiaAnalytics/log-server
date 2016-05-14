@@ -1,0 +1,14 @@
+log-server:
+  image: 'cullophid/log-server:latest'
+  links:
+    - rethinkdb
+  ports:
+    - '3000:80'
+    - '33333:33333/udp'
+rethinkdb:
+  expose:
+    - '28015'
+    - '29015'
+  image: 'rethinkdb:latest'
+  ports:
+    - '8080:8080'
