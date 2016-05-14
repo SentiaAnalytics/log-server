@@ -10,10 +10,16 @@ renderOption = (text) =>
 module.exports = (props) =>
   {locations, tags, filters} = props
   <div className="space-between well">
-    <select className="form-control m-10" onChange={(e) => setTagFilter e.target.value}>
-      {map renderOption, [tags..., 'all']}
-    </select>
-    <select className="form-control m-10" onChange={(e) => setLocationFilter e.target.value}>
-    {map renderOption, [locations..., 'all']}
-    </select>
+    <label className="grow p-10">
+      Tags
+      <select className="form-control" onChange={(e) => setTagFilter e.target.value}>
+        {map renderOption, [tags..., 'all']}
+      </select>
+    </label>
+    <label className="grow p-10">
+      Host
+      <select className="form-control" onChange={(e) => setLocationFilter e.target.value}>
+      {map renderOption, [locations..., 'all']}
+      </select>
+    </label>
   </div>

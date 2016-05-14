@@ -1,6 +1,8 @@
 assocPath = require 'ramda/src/assocPath'
+assoc = require 'ramda/src/assoc'
 evolve = require 'ramda/src/evolve'
 map = require 'ramda/src/map'
+curry = require 'ramda/src/curry'
 redux = require './redux'
 defaultModel =
   logs: [],

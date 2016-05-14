@@ -3,9 +3,19 @@ map = require 'ramda/src/map'
 sort = require 'ramda/src/sort'
 curry = require 'ramda/src/curry'
 contains = require 'ramda/src/contains'
-renderLog = require './log'
+LogEntry = require './log'
 
 sortLogs = sort ((a, b) => b.timestamp - a.timestamp)
+
+renderLog = ({id, timestamp, payload, from, tags}) =>
+    <LogEntry
+      key={id}
+      id={id}
+      timestamp={timestamp}
+      payload={payload}
+      from={from}
+      tags={tags}
+    />
 
 filterLogs = curry ({location, tag}, logs) =>
   console.log 'TAG', tag
