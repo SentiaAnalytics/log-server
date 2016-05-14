@@ -10,7 +10,7 @@ filter = require 'ramda/src/filter'
 module.exports = (state) => React.createElement React.createClass
   getInitialState: () ->
     state.getState()
-    
+
   componentDidMount: () ->
     state.observe (model) =>
       console.log 'MODEL', model
@@ -19,12 +19,10 @@ module.exports = (state) => React.createElement React.createClass
   render: () ->
     {logs, filters} = this.state
     console.log 'STATE', this.state
-    locations = uniq map ((x) => x.from?.address), logs
-    tags = filter ((x) => x), uniq flatten map ((x) => split ':', x.tags), logs
-    console.log 'locations', locations
-    console.log 'tags',tags
+    uniquelocations = uniq map ((x) => x.from?.address), logs
+    uniquetags = filter ((x) => x), uniq flatten map ((x) => x.tags), logs
     <div className="container-fluid">
       <h1>Sentia Logs</h1>
-      <Filters locations={locations} tags={tags} filters={filters}/>
+      <Filters locations={uniquelocations} tags={uniquetags} filters={filters}/>
       <LogList logs={logs} filters={filters}/>
     </div>
