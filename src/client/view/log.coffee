@@ -1,6 +1,16 @@
 React = require 'react'
 map = require 'ramda/src/map'
+reduce = require 'ramda/src/reduce'
+intersperse = require 'ramda/src/intersperse'
+tail = require 'ramda/src/tail'
 D = require 'date-fp'
+
+renderPayload = (text) =>
+  links = text.match /"(https?:\/\/([^"])*)"/
+  if links
+    link = links[1]
+    intersperse (<a key={link} href={link}>{link}</a>), text.split link
+  else text
 
 renderTag = (tag) =>
   <span key={tag}><span className="label label-primary">{tag}</span> </span>
@@ -29,7 +39,7 @@ module.exports = React.createClass
       </div>
       { if expanded
           <pre>
-            {payload}
+          {renderPayload(payload)}
           </pre>
         else
           ''
