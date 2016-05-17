@@ -12,12 +12,10 @@ module.exports = (state) => React.createElement React.createClass
 
   componentDidMount: () ->
     state.observe (model) =>
-      console.log 'MODEL', model
       this.setState model
 
   render: () ->
     {logs, filters} = this.state
-    console.log 'STATE', this.state
     uniquelocations = uniq map ((x) => x.from?.address), logs
     uniquetags = filter ((x) => x), uniq flatten map ((x) => x.tags), logs
     <div className="container-fluid">

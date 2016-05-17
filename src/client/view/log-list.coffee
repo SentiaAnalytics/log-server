@@ -18,8 +18,6 @@ renderLog = ({id, timestamp, payload, from, tags}) =>
     />
 
 filterLogs = curry ({location, tag}, logs) =>
-  console.log 'TAG', tag
-
   logs.filter (log) =>
     switch
       when location != 'all' and log.from.address != location then false
@@ -29,7 +27,6 @@ filterLogs = curry ({location, tag}, logs) =>
 
 module.exports = ({logs:_logs, filters}) =>
   logs = (filterLogs filters) sortLogs _logs
-  console.log 'LOGS', logs
   <ul className="list-group">
     {map renderLog, logs}
   </ul>

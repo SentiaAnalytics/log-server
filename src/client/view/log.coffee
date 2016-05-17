@@ -3,9 +3,7 @@ map = require 'ramda/src/map'
 D = require 'date-fp'
 
 renderTag = (tag) =>
-  console.log 'TAG', tag
   <span key={tag}><span className="label label-primary">{tag}</span> </span>
-
 
 module.exports = React.createClass
 
@@ -18,8 +16,7 @@ module.exports = React.createClass
   render: () ->
     props = this.props
     {expanded} = this.state
-    console.log 'LOG', props
-    payload = JSON.stringify props.payload, null, 2
+    payload = if typeof props.payload == 'object' then JSON.stringify props.payload, null, 2 else props.payload
     <article key={props.id} className="list-group-item">
       <h4 className="space-between"><small>{D.format 'YYYY-MM-DD HH:mm:ss.SSS', new Date(props.timestamp)}</small> <span>{props.from.address}</span></h4>
       <div className="space-between m-b-10">
