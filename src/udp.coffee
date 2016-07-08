@@ -1,5 +1,6 @@
 rethink = require './rethink'
 config = require './config'
+r = require 'rethinkdb'
 {merge, evolve, split} = require 'ramda'
 dgram = require 'dgram'
 
@@ -13,4 +14,4 @@ server.on 'message', (buffer, remote) =>
   data = evolve {tags: split ':'}, merge timestamp: new Date(), from: remote, JSON.parse buffer
   console.log "#{remote.address}:#{remote.port} - #{buffer.toString()}"
 
-  rethink.insert 'logs', data
+  rethink.run r.table('logs').insert data
