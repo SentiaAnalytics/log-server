@@ -18,7 +18,7 @@ app.use auth
 app.use express.static 'public'
 
 app.get '/logs', (req, res) =>
-  db.toArray r.table('logs').limit(200)
+  db.toArray r.table('logs').orderBy({index: r.desc('timestamp')}).limit(200)
     .then (logs) =>
       console.log 'LOGS', logs
       res.send logs
