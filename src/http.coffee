@@ -20,8 +20,10 @@ app.use express.static 'public'
 app.get '/logs', (req, res) =>
   db.toArray r.table('logs').limit(200)
     .then (logs) =>
+      console.log 'LOGS', logs
       res.send logs
     .catch (err) =>
+      console.log 'ERROR', err
       res.status(500).send(err)
 
 module.exports = server
