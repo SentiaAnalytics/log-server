@@ -1,22 +1,24 @@
-rethink = require './rethink'
+{flip} = require 'ramda'
+db = require './rethink'
+r = require 'rethinkdb'
 express = require 'express'
 socketIO = require 'socket.io'
 http = require 'http'
-
+auth = require './auth'
 app = express()
 server = http.Server app
 io = socketIO server
 
-rethink.changes 'logs'
-  .then (changes) => changes.each (err, change) =>
-    console.log 'CHANGE', change
-    if change.old_val == null
-      io.emit 'NEW_LOG', change.new_val
+(flip db.each) r.table('logs').changes(), (err, change) ->
+  console.log 'CHANGE', change
+  if !err && change.old_val == null
+    io.emit 'NEW_LOG', change.new_val
 
+app.use auth
 app.use express.static 'public'
 
 app.get '/logs', (req, res) =>
-  rethink.all 'logs'
+  db.toArray r.table('logs').limit(200)
     .then (logs) =>
       res.send logs
     .catch (err) =>
