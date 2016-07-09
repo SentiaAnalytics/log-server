@@ -10,7 +10,6 @@ server = http.Server app
 io = socketIO server
 
 (flip db.each) r.table('logs').changes(), (err, change) ->
-  console.log 'CHANGE', change
   if !err && change.old_val == null
     io.emit 'NEW_LOG', change.new_val
 
